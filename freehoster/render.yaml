@@ -1,0 +1,26 @@
+services:
+  # Backend API
+  - type: web
+    name: freehoster-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: PORT
+        value: 3000
+
+  # Frontend
+  - type: web
+    name: freehoster-frontend
+    env: static
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://freehoster-api.onrender.com/api
